@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>
+            my first html
+        </title>
+    </head>
+    <body>
+        <input id="ask" type="text" placeholder="enter" onkeypress="clickPress(event)" autofocus />
+        <button id="ds" onclick="update_text()">
+            press
+        </button>
+        <p id="nso"></p>
+        <script>
+            function update_text(){
+                var text_value = document.getElementById('ask').value
+                fetch('http://127.0.0.1:5000/first_page',{
+                    method:'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({
+                        give_input: text_value
+                    })
+                }).then(function (res) {
+                    return res.text()
+                }).then(function (res) {
+                    document.getElementById('nso').innerHTML=res
+                })
+            }
+            function clickPress(event) {
+                if (event.keyCode == 13) {
+                    update_text()
+                }
+            }
+        </script>
+    </body>
+</html>
